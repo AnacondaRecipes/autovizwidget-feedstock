@@ -19,7 +19,7 @@ build:
     script: "{{ PYTHON }} -m pip install . -vvv"
 
 requirements:
-    build:
+    host:
         - python
         - pip
     run:
