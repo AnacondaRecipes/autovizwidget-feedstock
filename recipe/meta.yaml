@@ -1,7 +1,7 @@
 {% set name = "autovizwidget" %}
-{% set version = "0.12.1" %}
+{% set version = "0.12.5" %}
 {% set hash_type = "sha256" %}
-{% set hash_val = "dc350f5de28ce6e4f9710818d78bd43915263118f3e12eb08ef06274603d34c2" %}
+{% set hash_val = "d4bc1baac59de1713b5c0366d01be97910de5132ab9c0fe9e3c9e647f8720105" %}
 
 package:
     name: {{ name }}
@@ -33,6 +33,7 @@ test:
 about:
     home: https://github.com/jupyter-incubator/sparkmagic/tree/master/autovizwidget
     license: BSD 3-clause
+    license_family: BSD
     summary: An Auto-Visualization library for pandas dataframes
 
 
