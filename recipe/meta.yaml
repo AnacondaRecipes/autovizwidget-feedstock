@@ -1,5 +1,5 @@
 {% set name = "autovizwidget" %}
-{% set version = "0.20.0" %}
+{% set version = "0.21.0" %}
 
 
 package:
@@ -8,14 +8,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/autovizwidget-{{ version }}.tar.gz
-  sha256: 5e413362a6800fa32e6549d1d314a167b46dfc4850c4750cc8d8b6a7db486068
+  sha256: e2e605b6f45736a6fefd43dcd275d69804293294d914f0903fd30265ac1b65a9
 
 build:
   number: 0
-  # The downstream sparkmagic dropped support for Python 3.6,
-  # see https://github.com/jupyter-incubator/sparkmagic/blob/0.20.0/CHANGELOG.md#updates
-  skip: True  # [py<37]
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
@@ -28,7 +25,7 @@ requirements:
     - hdijupyterutils >=0.6
     - ipywidgets >5.0.0
     - notebook >=4.2
-    - pandas >=0.20.1
+    - pandas >=0.20.1,<2.0.0
     - plotly >=3
 
 test:
@@ -36,7 +33,7 @@ test:
     - autovizwidget
     - autovizwidget.plotlygraphs
   commands:
-    - pip check || true
+    - pip check
   requires:
     - pip
 
@@ -46,8 +43,8 @@ about:
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE.md
-  license_url: https://github.com/jupyter-incubator/sparkmagic/blob/master/autovizwidget/LICENSE.md
   dev_url: https://github.com/jupyter-incubator/sparkmagic/tree/master/autovizwidget
+  doc_url: https://github.com/jupyter-incubator/sparkmagic/tree/master/autovizwidget
 
 extra:
   recipe-maintainers:
