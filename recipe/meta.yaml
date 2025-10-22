@@ -6,21 +6,24 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/autovizwidget-{{ version }}.tar.gz
-  sha256: 562861e9aa25c460eb27b958031a50c008d4333179049357ff1fe25e80c07141
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+    sha256: 562861e9aa25c460eb27b958031a50c008d4333179049357ff1fe25e80c07141
+  - url: https://github.com/jupyter-incubator/sparkmagic/archive/refs/tags/{{ version }}.tar.gz
+    sha256: 0ed016f82d5109e809de58007ac9b1dfd254a7f8245774b97ae39b8fd71d278c
+    folder: gh
 
 build:
   number: 0
+  skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python
     - pip
-    - setuptools
-    - wheel
+    - python
   run:
     - python
+    - mock
     - hdijupyterutils >=0.6
     - ipywidgets >5.0.0
     - notebook >=4.2
@@ -28,22 +31,26 @@ requirements:
     - plotly >=3
 
 test:
+  source_files:
+    - gh/autovizwidget/autovizwidget
   imports:
     - autovizwidget
     - autovizwidget.plotlygraphs
-  commands:
-    # For passing pip check: "jupyter 1.0.0 requires qtconsole, which is not installed."
-    - pip check || true  # [not win]
-    - pip check || (exit 1)  # [win]
   requires:
     - pip
+    - pytest
+  commands:
+    - pip check
+    - cd $SRC_DIR/gh/autovizwidget/autovizwidget/tests && pytest -v .  # [not win]
+    - cd %SRC_DIR%/gh/autovizwidget/autovizwidget/tests && pytest -v .  # [win]
 
 about:
   home: https://github.com/jupyter-incubator/sparkmagic/tree/master/autovizwidget
-  summary: "AutoVizWidget: An Auto-Visualization library for pandas dataframes"
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE.md
+  summary: "AutoVizWidget: An Auto-Visualization library for pandas dataframes"
+  description: "AutoVizWidget: An Auto-Visualization library for pandas dataframes"
   dev_url: https://github.com/jupyter-incubator/sparkmagic/tree/master/autovizwidget
   doc_url: https://github.com/jupyter-incubator/sparkmagic/tree/master/autovizwidget
 
